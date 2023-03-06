@@ -1,0 +1,43 @@
+﻿@model LoginViewModel
+
+@{
+    ViewData["Title"] = "Вход";
+}
+
+<div class="m-auto w-50">
+    <div class="text-center rounded border bg-light">
+
+        <h1 class="m-3">Вход</h1>
+
+        <hr />
+
+        <form class="w-75 m-auto" asp-action="Login">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group m-3">
+                <label asp-for="UserName" class="control-label"></label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group m-3">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <input type="hidden" asp-for="ReturnUrl" />
+
+            <div class="form-group m-3">
+                <button class="btn btn-primary">Войти</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="mt-2 text-center rounded border bg-light">
+
+        <h5 class="mt-2">Еще не зарегестрированы?</h5>
+
+        <a class="btn btn-info m-3" asp-controller="Account" asp-action="Register" asp-route-returnUrl="@Model.ReturnUrl">Зарегестрироваться</a>
+    </div>
+</div>

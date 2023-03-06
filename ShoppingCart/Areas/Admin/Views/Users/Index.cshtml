@@ -1,0 +1,45 @@
+﻿@model List<IdentityUser>
+
+@{
+    ViewData["Title"] = "Admin";
+}
+
+<h1>Admin area</h1>
+
+<a asp-action="Create">Add new user</a>
+
+<table class="table table-bordered">
+    <tr class="bg-primary text-white text-center">
+        <th>Id</th>
+        <th>UserName</th>
+        <th>Email</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+
+
+    @if (Model.Count == 0)
+    {
+        <tr>
+            <td colspan="5" class="text-center">No User Account</td>
+        </tr>
+    }
+    else
+    {
+        foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Id</td>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>
+                    <a class="btn btn-sm btn-warning" asp-area="Admin" asp-action="Edit" asp-route-id="@user.Id">Edit</a>
+                </td>
+                <td>
+                    <a class="btn btn-sm btn-warning" asp-area="Admin" asp-action="Delete" asp-route-id="@user.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    }
+
+</table>

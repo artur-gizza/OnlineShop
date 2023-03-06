@@ -1,0 +1,48 @@
+﻿@model RegisterViewModel
+
+@{
+    ViewData["Title"] = "Регистрация";
+}
+
+<div class="m-auto w-50">
+    <div class="text-center rounded border bg-light">
+
+        <h1 class="m-3">Регистрация</h1>
+
+        <hr />
+
+        <form class="w-75 m-auto" asp-action="Register">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group m-2">
+                <label asp-for="UserName" class="control-label"></label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group m-2">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group m-2">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group m-2">
+                <label asp-for="RepeatPassword" class="control-label"></label>
+                <input asp-for="RepeatPassword" class="form-control" />
+                <span asp-validation-for="RepeatPassword" class="text-danger"></span>
+            </div>
+
+            <input type="hidden" asp-for="ReturnUrl" />
+
+            <div class="form-group m-3">
+                <button class="btn btn-primary">Зарегестрироваться</button>
+            </div>
+        </form>
+    </div>
+</div>

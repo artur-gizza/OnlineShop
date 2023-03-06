@@ -1,0 +1,68 @@
+﻿@model RoleViewModel
+
+@{
+    ViewData["Title"] = "Roles";
+}
+
+<h1>Edit Role Members: @Model.Role.Name</h1>
+
+<form asp-action="Edit">
+
+    <h3>Non members</h3>
+
+    <input type="hidden" name="RoleName" value="@Model.Role.Name" />
+
+    <table class="table table-bordered">
+        @if (Model.NonMembers != null && Model.NonMembers.Count() == 0)
+        {
+            <tr>
+                <td class="text-center">All users are members</td>
+            </tr>
+        }
+        else
+        {
+            foreach (IdentityUser user in Model.NonMembers)
+            {
+                <tr class="bg-primary text-white text-center">
+                    <td>@user.UserName</td>
+                    <td>
+                        <input type="checkbox" value="@user.Id" name="AddIds" />
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+
+
+    <h3>Members</h3>
+
+    <table class="table table-bordered">
+        @if (Model.Members != null && Model.Members.Count() == 0)
+        {
+            <tr>
+                <td class="text-center">No users are members</td>
+            </tr>
+        }
+        else
+        {
+            foreach (IdentityUser user in Model.Members)
+            {
+                <tr class="bg-primary text-white text-center">
+                    <td>@user.UserName</td>
+                    <td>
+                        <input type="checkbox" value="@user.Id" name="DeleteIds" />
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+
+    <div class="form-group">
+        <button class="btn btn-primary mt-2">Edit role</button>
+    </div>
+
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
