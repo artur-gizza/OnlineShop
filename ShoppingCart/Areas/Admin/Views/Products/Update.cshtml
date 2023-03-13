@@ -27,10 +27,7 @@
 
             <div class="form-group mt-1">
                 <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price"
-                       class="form-control"
-                       pattern="[0-9]+(,[0-9]+)?"
-                       title="Для разделения десятичной дроби используйте ','"/>
+                <input asp-for="Price" class="form-control"/>
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
 

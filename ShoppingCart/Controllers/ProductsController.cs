@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShoppingCart.Infrastructure;
 using ShoppingCart.Models;
+using ShoppingCart.Models.ViewModels;
 
 namespace ShoppingCart.Controllers
 {
@@ -21,27 +22,30 @@ namespace ShoppingCart.Controllers
         public async Task<IActionResult> Index(string categorySlug = "", int p = 1)
         {
             int pageSize = 3;
-            ViewBag.CurrentPage = p;
-            ViewBag.CategorySlug = categorySlug;
+            IQueryable<Product> productsByCategory;
 
             if (p < 1) p = 1;
 
-            if(categorySlug == "")
+            //можно завернуть в функцию когда буду выносить логику
+            if (categorySlug == "")
             {
-                ViewBag.TotalPages = (int)Math.Ceiling((decimal)db.Products.Count() / pageSize);
+                productsByCategory = db.Products;
+            }
+            else
+            {
+                Category category = await db.Categories.Where(c => c.Slug == categorySlug).FirstOrDefaultAsync();
+                if (category == null) return RedirectToAction("Index");
 
-                return View(await db.Products.Skip((p - 1) * pageSize).Take(pageSize).ToListAsync());
+                productsByCategory = db.Products.Where(p => p.CategoryId == category.Id);
             }
 
-            Category category = await db.Categories.Where(c => c.Slug == categorySlug).FirstOrDefaultAsync();
+            PageViewModel pageVM = new PageViewModel(p, productsByCategory.Count(), pageSize, categorySlug);
+            var indexVM = new IndexViewModel<Product>(
+                await productsByCategory.Skip((p - 1) * pageSize).Take(pageSize).ToListAsync(),
+                pageVM
+                );
 
-            if (category == null) return Redirect("/Products");
-
-            var productsByCategory = db.Products.Where(p => p.CategoryId == category.Id);
-
-            ViewBag.TotalPages = (int)Math.Ceiling((decimal)productsByCategory.Count() / pageSize);
-
-            return View(await productsByCategory.Skip((p - 1) * pageSize).Take(pageSize).ToListAsync());
+            return View(indexVM);
         }
     }
 }

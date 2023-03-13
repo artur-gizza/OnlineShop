@@ -31,7 +31,7 @@ namespace ShoppingCart.Controllers
             return View(cartVM);
         }
 
-        public async Task<IActionResult> Add(long id)
+        public async Task<IActionResult> Add(int id)
         {
             Product product = await db.Products.FindAsync(id);
             if (product == null)
@@ -59,7 +59,7 @@ namespace ShoppingCart.Controllers
             return Redirect(Request.Headers["Referer"].ToString());
         }
 
-        public IActionResult Decrease(long id)
+        public IActionResult Decrease(int id)
         {
             List<CartItem> cart = HttpContext.Session.GetJson<List<CartItem>>("Cart");
             if (cart == null)
@@ -96,7 +96,7 @@ namespace ShoppingCart.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult Remove(long id)
+        public IActionResult Remove(int id)
         {
             List<CartItem> cart = HttpContext.Session.GetJson<List<CartItem>>("Cart");
             if (cart == null)

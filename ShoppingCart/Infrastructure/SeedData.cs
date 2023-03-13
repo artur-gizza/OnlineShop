@@ -11,71 +11,63 @@ namespace ShoppingCart.Infrastructure
 
             if (!context.Products.Any())
             {
-                Category fruits = new Category { Name = "Fruits", Slug ="fruits" };
-                Category shirts = new Category { Name = "Shirts", Slug = "shirts" };
+                Category fruits = new Category { Name = "Фрукты", Slug ="fruits" };
+                Category shirts = new Category { Name = "Футболки", Slug = "shirts" };
 
                 context.Products.AddRange(
                     new Product
                     {
-                        Name = "Apples",
-                        Description = "Juicy red apples",
-                        Price = 1.5M,
+                        Name = "Яблоки",
+                        Price = 50,
                         Category = fruits,
                         ImageName = "apples.jpg"
                     },
                     new Product
                     {
-                        Name = "Bananas",
-                        Description = "Big yellow bananas",
-                        Price = 2M,
+                        Name = "Бананы",
+                        Price = 70,
                         Category = fruits,
                         ImageName = "bananas.jpg"
                     },
                     new Product
                     {
-                        Name = "Watermelon",
-                        Description = "Round green watermelon",
-                        Price = 4M,
+                        Name = "Арбуз",
+                        Price = 200,
                         Category = fruits,
                         ImageName = "watermelon.jpg"
                     },
                     new Product
                     {
-                        Name = "Oranges",
-                        Description = "Orange oranges",
-                        Price = 2.5M,
+                        Name = "Апельсины",
+                        Price = 50,
                         Category = fruits,
                         ImageName = "oranges.jpg"
                     },
                     new Product
                     {
-                        Name = "Blue shirt",
-                        Description = "Blue shirt",
-                        Price = 9.99M,
+                        Name = "Синяя футболка",
+                        Price = 600,
                         Category = shirts,
                         ImageName = "blue shirt.jpg"
                     },
                     new Product
                     {
-                        Name = "Black shirt",
-                        Description = "Black shirt",
-                        Price = 9.99M,
+                        Name = "Черная футболка",
+                        Price = 600,
                         Category = shirts,
                         ImageName = "black shirt.jpg"
                     },
                     new Product
                     {
-                        Name = "White shirt",
-                        Description = "White shirt",
-                        Price = 9.99M,
+                        Name = "Белая футболка",
+                        Price = 700,
                         Category = shirts,
                         ImageName = "white shirt.jpg"
                     },
                     new Product
                     {
-                        Name = "Red shirt",
-                        Description = "Red shirt",
-                        Price = 9.99M,
+                        Name = "Красная футболка",
+                        Price = 1000,
                         Category = shirts,
                         ImageName = "red shirt.jpg"
                     }

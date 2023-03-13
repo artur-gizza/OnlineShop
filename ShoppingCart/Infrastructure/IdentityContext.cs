@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Core.Infrastructure
+namespace ShoppingCart.Infrastructure
 {
 	public class IdentityContext : IdentityDbContext<IdentityUser>
 	{

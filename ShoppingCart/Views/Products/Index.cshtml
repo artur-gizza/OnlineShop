@@ -1,35 +1,32 @@
-﻿@model IEnumerable<Product>
+﻿@model IndexViewModel<Product>
 
 @{
-    ViewData["Title"] = "Products";
+    ViewData["Title"] = "Товары";
 }
 
-<h1>Products</h1>
+<h1>Товары</h1>
 
 <div class="row">
-    @foreach (var item in @Model)
+    @foreach (var item in Model.Items)
     {
         <div class="col-4">
-            <img src="/media/products/@item.ImageName" class="img-fluid" onerror="showDefaultImage(this)"/>
+            <img src="/media/products/@item.ImageName" class="img-fluid" onerror="showDefaultImage(this)" />
             <h4>@item.Name</h4>
             <div>
                 @Html.Raw(item.Description)
             </div>
             <p>
-                @item.Price.ToString("C2")
+                @item.Price.ToString("C0")
             </p>
             <p>
-                <a class="btn btn-primary" asp-controller="Cart" asp-action="Add" asp-route-id="@item.Id">Add to cart</a>
+                <a class="btn btn-primary" asp-controller="Cart" asp-action="Add" asp-route-id="@item.Id">В корзину</a>
             </p>
         </div>
     }
 
-    @if (ViewBag.TotalPages > 1)
-    {
-        <pagination class="d-flex w-100 justify-content-center"
-                    total-pages="ViewBag.TotalPages"
-                    route="/Products/@ViewBag.CategorySlug"
-                    current-page="@ViewBag.CurrentPage">
-        </pagination>
-    }
+    <pagination class="d-flex w-100 justify-content-center"
+                total-pages="@Model.PageVM.TotalPages"
+                route="/Products/@Model.PageVM.UrlSlug"
+                current-page="@Model.PageVM.CurrentPage">
+    </pagination>
 </div>

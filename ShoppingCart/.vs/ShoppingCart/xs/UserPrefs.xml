@@ -1,0 +1,48 @@
+﻿<Properties StartupConfiguration="{13C611C2-3244-474C-B6EF-E1A0C022D09A}|Default">
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Areas/Admin/Views/Roles/Index.cshtml">
+    <Files>
+      <File FileName="Program.cs" Line="84" Column="1" />
+      <File FileName="Areas/Admin/Controllers/RolesController.cs" Line="15" Column="20" />
+      <File FileName="Areas/Admin/Views/Roles/Index.cshtml" Line="32" Column="36" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="ShoppingCart" expanded="True">
+            <Node name="ShoppingCart" expanded="True">
+              <Node name="Areas" expanded="True">
+                <Node name="Admin" expanded="True">
+                  <Node name="Controllers" expanded="True" />
+                  <Node name="Views" expanded="True">
+                    <Node name="Roles" expanded="True" />
+                  </Node>
+                </Node>
+              </Node>
+              <Node name="Infrastructure" expanded="True">
+                <Node name="Components" expanded="True" />
+                <Node name="TagHelpers" expanded="True">
+                  <Node name="RolesTagHelper.cs" selected="True" />
+                </Node>
+              </Node>
+              <Node name="Migrations" expanded="True">
+                <Node name="Data" expanded="True" />
+                <Node name="20230312222619_Initial.cs" expanded="True" />
+              </Node>
+              <Node name="Models" expanded="True">
+                <Node name="ViewModels" expanded="True" />
+              </Node>
+              <Node name="appsettings.json" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.ShoppingCart PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MultiItemStartupConfigurations />
+</Properties>

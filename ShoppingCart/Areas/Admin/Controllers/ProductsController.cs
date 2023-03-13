@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ShoppingCart.Infrastructure;
 using ShoppingCart.Models;
+using ShoppingCart.Models.ViewModels;
 
 namespace ShoppingCart.Areas.Admin.Controllers
 {
@@ -28,27 +29,32 @@ namespace ShoppingCart.Areas.Admin.Controllers
         public async Task<IActionResult> Index(string categorySlug = "", int p = 1)
         {
             int pageSize = 10;
-            ViewBag.CurrentPage = p;
-            ViewBag.CategorySlug = categorySlug;
+            IQueryable<Product> productsByCategory;
 
+
+            //можно завернуть в функцию когда буду выносить логику
             if (categorySlug == "")
             {
-                ViewBag.TotalPages = (int)Math.Ceiling((decimal)db.Products.Count() / pageSize);
+                productsByCategory = db.Products;
+            }
+            else
+            {
+                Category category = await db.Categories.Where(c => c.Slug == categorySlug).FirstOrDefaultAsync();
+                if (category == null) return RedirectToAction("Index");
 
-                return View(await db.Products.Include(p => p.Category)
-                .Skip((p - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync());
+                productsByCategory = db.Products.Where(p => p.CategoryId == category.Id);
             }
 
-            Category category = await db.Categories.Where(c => c.Slug == categorySlug).FirstOrDefaultAsync();
-            if (category == null) return RedirectToAction("Index");
+            PageViewModel pageVM = new PageViewModel(p, productsByCategory.Count(), pageSize, categorySlug);
+            var indexVM = new IndexViewModel<Product>(
+                await productsByCategory.Skip((p - 1) * pageSize)
+                                    .Take(pageSize)
+                                    .Include(p => p.Category)
+                                    .ToListAsync(),
+                pageVM
+                );
 
-            var productsByCategory = db.Products.Where(p => p.CategoryId == category.Id);
-
-            ViewBag.TotalPages = (int)Math.Ceiling((decimal)productsByCategory.Count() / pageSize);
-
-            return View(await productsByCategory.Skip((p - 1) * pageSize).Take(pageSize).ToListAsync());
+            return View(indexVM);
         }
 
         public IActionResult Create()
@@ -87,7 +93,7 @@ namespace ShoppingCart.Areas.Admin.Controllers
             return View(product);
         }
 
-        public async Task<IActionResult> Update(long id)
+        public async Task<IActionResult> Update(int id)
         {
             Product product = await db.Products.FindAsync(id);
 
@@ -98,7 +104,7 @@ namespace ShoppingCart.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(long id, Product product)
+        public async Task<IActionResult> Update(int id, Product product)
         {
             ViewBag.Categories = new SelectList(db.Categories, "Id", "Name", product.CategoryId);
 
@@ -134,16 +140,16 @@ namespace ShoppingCart.Areas.Admin.Controllers
         }
 
 
-        public async Task<IActionResult> Delete(long id)
+        public async Task<IActionResult> Delete(int id)
         {
             Product product = await db.Products.FindAsync(id);
 
-            if(product == null)
+            if (product == null)
             {
                 return RedirectToAction("Index");
             }
 
-            if(product.ImageName != null)
+            if (product.ImageName != null)
             {
                 string imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "media/products", product.ImageName);
 

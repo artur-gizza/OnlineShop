@@ -1,4 +1,3 @@
-using Core.Infrastructure;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -9,16 +8,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-//products context
 builder.Services.AddDbContext<DataContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration["ConnectionStrings:DbConnection"]);
+    options.UseNpgsql(builder.Configuration.GetConnectionString("Postgres"));
 });
 
-//identity context
 builder.Services.AddDbContext<IdentityContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration["ConnectionStrings:DbConnection"]);
+    options.UseNpgsql(builder.Configuration.GetConnectionString("Postgres"));
 });
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
@@ -26,7 +23,6 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddDefaultTokenProviders();
 
 
-//password configuration
 builder.Services.Configure<IdentityOptions>(options =>
 {
     options.Password.RequireNonAlphanumeric = false;
@@ -40,7 +36,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 builder.Services.AddControllersWithViews();
 
 
-//add session
+//adding session
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
@@ -82,8 +78,13 @@ app.MapControllerRoute(
     name: "default",
     pattern: "/{controller=Home}/{action=Index}/{id?}");
 
-//var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<DataContext>();
-//SeedData.SeedDataBase(context);
+
+var context = app.Services.CreateScope().ServiceProvider.GetRequiredService<DataContext>();
+SeedData.SeedDataBase(context);
+var _userManager = app.Services.CreateScope().ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+var _roleManager = app.Services.CreateScope().ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+SeedIdentity.SeedIdentityDataBase(_userManager, _roleManager);
+
 
 app.Run();
 

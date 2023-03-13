@@ -1,0 +1,35 @@
+﻿@model IndexViewModel<Category>
+
+@{
+    ViewData["Title"] = "Категории";
+}
+
+<h1>Категории | <a asp-action="Create">Добавить новую</a></h1>
+
+<hr />
+
+<table class="table text-center">
+    <tr>
+        <th>Название</th>
+        <th>Url</th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model.Items)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Slug</td>
+            <td>
+                <a class="btn btn-primary" asp-action="Update" asp-route-id="@item.Id">Изменить</a>
+                <a class="btn btn-primary confirmDeletion" asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+            </td>
+        </tr>
+    }
+</table>
+
+<pagination class="d-flex w-100 justify-content-center"
+            total-pages="@Model.PageVM.TotalPages"
+            route="/Admin/Categories/Index"
+            current-page="@Model.PageVM.CurrentPage">
+</pagination>
+

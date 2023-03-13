@@ -12,7 +12,6 @@
     <tr class="bg-primary text-white text-center">
         <th>Id</th>
         <th>Name</th>
-        <th>Members</th>
         <th>Edit</th>
         <th>Delete</th>
     </tr>
@@ -31,10 +30,6 @@
             <tr>
                 <td>@role.Id</td>
                 <td>@role.Name</td>
-
-                @*displays members with help of TagHelper RolesTagHelper*@
-                <td user-role="@role.Id"></td>
-
                 <td>
                     <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@role.Id">Edit</a>
                 </td>

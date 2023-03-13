@@ -1,41 +1,41 @@
-﻿@model IEnumerable<Product>
+﻿@model IndexViewModel<Product>
 
 @{
-    ViewData["Title"] = "Products";
+    ViewData["Title"] = "Товары";
 }
 
-<h1>Products | <a asp-action="Create">Create New</a></h1>
+<h1>Товары | <a asp-action="Create">Добавить новый</a></h1>
 
 <hr />
 
 <table class="table text-center">
     <tr>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Category</th>
-        <th>Image</th>
+        <th>Название</th>
+        <th>Цена</th>
+        <th>Категория</th>
+        <th>Изображение</th>
         <th></th>
     </tr>
-    @foreach (var item in Model)
+    @foreach (var item in Model.Items)
     {
         <tr>
             <td>@item.Name</td>
-            <td>@item.Price.ToString("C2")</td>
+            <td>@item.Price.ToString("C0")</td>
             <td>@item.Category.Name</td>
             <td>
                 <img src="/media/products/@item.ImageName" width="100" onerror="showDefaultImage(this)"/>
             </td>
             <td>
-                <a asp-action="Update" asp-route-id="@item.Id">Edit</a>
-                <a class="confirmDeletion" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a class="btn btn-primary" asp-action="Update" asp-route-id="@item.Id">Изменить</a>
+                <a class="btn btn-primary confirmDeletion" asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
             </td>
         </tr>
     }
 </table>
 
 <pagination class="d-flex w-100 justify-content-center"
-            total-pages="@ViewBag.TotalPages"
-            route="/Admin/Products/Index/@ViewBag.CategorySlug"
-            current-page="@ViewBag.CurrentPage">
+            total-pages="@Model.PageVM.TotalPages"
+            route="/Admin/Products/Index/@Model.PageVM.UrlSlug"
+            current-page="@Model.PageVM.CurrentPage">
 </pagination>
 
